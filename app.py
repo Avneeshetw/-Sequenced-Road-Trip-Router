@@ -8,9 +8,13 @@ import requests
 from folium.plugins import PolyLineTextPath
 
 # Page Layout Configurations
-st.set_page_config(page_title="Interactive Logistics Router", layout="wide")
-
-# 🌟 Safe Logo Placement (Bina kisi layout ya header ko chede)
+# Page Layout Configurations aur Har jagah ka logo change karna
+st.set_page_config(
+    page_title="Interactive Logistics Router", 
+    layout="wide",
+    page_icon="DrishtiLogo.png"
+)
+# 🌟 Safe Logo Placement 
 logo_path = "DrishtiLogo.png"
 if os.path.exists(logo_path):
     st.logo(logo_path)
