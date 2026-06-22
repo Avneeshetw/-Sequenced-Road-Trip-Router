@@ -10,8 +10,13 @@ from folium.plugins import PolyLineTextPath
 # Page Layout Configurations
 st.set_page_config(page_title="Interactive Logistics Router", layout="wide")
 
-# Safe Formatting (No extra background color blocks)
-st.markdown("<style>.block-container { padding-top: 1rem; padding-bottom: 0.5rem; }</style>", unsafe_allow_html=True)
+# 🌟 Safe Logo Placement (Bina kisi layout ya header ko chede)
+logo_path = "DrishtiLogo.png"
+if os.path.exists(logo_path):
+    st.logo(logo_path)
+
+# Safe Formatting (Aapka original layout styles)
+st.markdown("<style>.block-container { padding-top: 4rem; padding-bottom: 3rem; }</style>", unsafe_allow_html=True)
 
 # Streamlit Native Header
 st.title("🛠️ Route Creation")
@@ -162,9 +167,7 @@ else:
             loc_name = row[name_col]
             is_wh = row[type_col] in ['Warehouse', 'Plant']
             
-            # 🌟 MAP KE SABHI WAREHOUSES PAR BADA KHOOBSURAT ICON LAGEGA
             if is_wh:
-                # Custom big vector icon logic applied universally to all warehouses
                 icon_html = """
                 <div style="
                     background-color: #e74c3c; 
@@ -182,7 +185,6 @@ else:
                 """
                 marker_icon = folium.DivIcon(html=icon_html, icon_size=(50, 50), icon_anchor=(25, 25))
                 
-                # Agar ye specific warehouse current select hua hai toh extra highlighting text label dikhao
                 if loc_name == st.session_state.sel_wh:
                     label_html = f"<div style='font-size: 14px; font-weight: bold; color: white; background: #e74c3c; padding: 4px 8px; border-radius: 4px; border: 2px solid white; white-space: nowrap; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);'>🏭 START: {loc_name}</div>"
                     popup_html = f"<b>{loc_name}</b><br><span style='color:red; font-weight:bold;'>Selected Active Origin</span>"
@@ -195,7 +197,6 @@ else:
                 folium.Marker(location=(row[lat_col], row[lon_col]), icon=marker_icon, popup=folium.Popup(popup_html, max_width=250)).add_to(m)
                 
             else:
-                # DBR Points Rendering Logic
                 if loc_name in active_dbrs:
                     color, icon = 'blue', 'shopping-cart'
                     stop_num = stop_order_dict.get(loc_name, 1)
